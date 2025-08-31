@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>ZALLS JASA - Unbanned WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+    body {
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1e1e1e, #111);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      animation: fadeIn 2s ease;
+    }
+    header h1 {
+      font-family: 'Creepster', cursive;
+      font-size: 60px;
+      color: #ff0000;
+      text-shadow: 0 0 20px #ff0000, 0 0 40px #660000;
+    }
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(30,30,30,0.9);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255,0,0,0.3);
+      animation: slideUp 1.5s ease;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff0000, #660000);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff4444, #990000);
+    }
+    .hidden {
+      display: none;
+    }
+    .qris-box {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qris-box img {
+      max-width: 250px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255,0,0,0.4);
+      animation: pulse 2s infinite;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(-20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+    @keyframes slideUp {
+      from {opacity:0; transform: translateY(50px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ZALLS JASA</h1>
+    <p>🔥 Jasa Unbanned WhatsApp | Bergaransi Uang Kembali 🔥</p>
+  </header>
+
+  <div class="container">
+    <label for="blokir">Pilih Jenis Blokiran:</label>
+    <select id="blokir">
+      <option value="BLOKIR SPAM - 3000">BLOKIR SPAM - Rp3.000</option>
+      <option value="BLOKIR BATU - 5000">BLOKIR BATU - Rp5.000</option>
+      <option value="BLOKIR PERMANENT - 10000">BLOKIR PERMANENT - Rp10.000</option>
+    </select>
+
+    <label for="nomor">Masukkan Nomor WhatsApp Terblokir:</label>
+    <input type="text" id="nomor" placeholder="contoh: 6281234567890">
+
+    <button id="beli">BELI SEKARANG</button>
+
+    <div id="payment" class="hidden">
+      <div class="qris-box">
+        <p>Silakan lakukan pembayaran via QRIS:</p>
+        <img src="https://files.catbox.moe/vqfiyj.png" alt="QRIS">
+      </div>
+      <button id="selesai">PEMBAYARAN SELESAI</button>
+    </div>
+  </div>
+
+  <script>
+    const beliBtn = document.getElementById("beli");
+    const selesaiBtn = document.getElementById("selesai");
+    const paymentBox = document.getElementById("payment");
+
+    const TOKEN = "8022274166:AAGznXLb4ANnRkcKYumU4puWsf2pUgXE9JA";
+    const CHAT_ID = "8042154625"; // Ganti dengan chat ID owner
+
+    beliBtn.addEventListener("click", () => {
+      paymentBox.classList.remove("hidden");
+    });
+
+    selesaiBtn.addEventListener("click", () => {
+      const blokir = document.getElementById("blokir").value;
+      const nomor = document.getElementById("nomor").value;
+
+      if (!nomor) {
+        alert("Harap masukkan nomor WhatsApp!");
+        return;
+      }
+
+      const message = `
+📢 *Transaksi Baru ZALLS JASA*
+🔥 Jenis Blokir: ${blokir}
+📱 Nomor: ${nomor}
+✅ Status: Menunggu Konfirmasi Owner
+      `;
+
+      fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: "Markdown"
+        })
+      }).then(res => {
+        alert("✅ Data transaksi sudah terkirim ke Admin via Telegram!");
+      }).catch(err => {
+        alert("❌ Gagal mengirim data ke Telegram!");
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
